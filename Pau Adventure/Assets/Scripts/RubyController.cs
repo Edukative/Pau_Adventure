@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
+   
     public float speed;
+    Rigidbody2D rubyRB2D; //the player's Rigidbody
     // Start is called before the first frame update
     void Start()
     {
-        
+        rubyRB2D = GetComponent<Rigidbody2D>(); //Get the player's rigidbody 
     }
 
     // Update is called once per frame
@@ -22,9 +24,9 @@ public class RubyController : MonoBehaviour
         position.x = position.x + speed * horizontal * Time.deltaTime; // the position is equal tp the same position but a little bit bigger
         position.y = position.y + speed * vertical * Time.deltaTime;
 
-    
-        transform.position = position; // saves the position to the current one
-
+        //transfor.position = position; // sevaes this position to the current
+        rubyRB2D.MovePosition(position);
+        
         Debug.Log("horizontal" + horizontal); // See the values are you sending when pressing the keys 
         Debug.Log("vertical" + vertical);
     }
