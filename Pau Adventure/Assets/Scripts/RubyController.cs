@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
-   
+
     public float speed;
     Rigidbody2D rubyRB2D; //the player's Rigidbody
+
+    public int maxHealth = 5;
+    int currentHealth;
+
     // Start is called before the first frame update
     void Start()
     {
         rubyRB2D = GetComponent<Rigidbody2D>(); //Get the player's rigidbody 
+        currentHealth = maxHealth; // the current health is the max health aviable to the player 
     }
 
     // Update is called once per frame
@@ -26,8 +31,22 @@ public class RubyController : MonoBehaviour
 
         //transfor.position = position; // sevaes this position to the current
         rubyRB2D.MovePosition(position);
-        
+
         Debug.Log("horizontal" + horizontal); // See the values are you sending when pressing the keys 
         Debug.Log("vertical" + vertical);
+
+       
     }
+
+
+    public void ChangeHealth(int amount)
+    {
+
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);// limits the number between 0 and max health
+        Debug.Log(currentHealth + "/" + maxHealth);
+
+    }
+ 
+
+
 }
