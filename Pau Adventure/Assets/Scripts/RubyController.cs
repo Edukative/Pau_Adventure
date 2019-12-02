@@ -9,13 +9,15 @@ public class RubyController : MonoBehaviour
     Rigidbody2D rubyRB2D; //the player's Rigidbody
 
     public int maxHealth = 5;
-    int currentHealth;
+    public int currentHealth;
 
     // Start is called before the first frame update
     void Start()
     {
         rubyRB2D = GetComponent<Rigidbody2D>(); //Get the player's rigidbody 
         currentHealth = maxHealth; // the current health is the max health aviable to the player 
+
+        currentHealth = 1; //
     }
 
     // Update is called once per frame
