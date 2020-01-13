@@ -5,29 +5,60 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public float speed; //speed of the enemy
-    Rigidbody rb2D;
+    Rigidbody2D rb2D;
     public bool isVertical; // if it's not, it will walk horitzontaly
- 
+
+    //timer
+    float timer;
+    int direction = 1;
+    public float changeTime = 3.0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        rb2D = GetComponent<Rigidbody>(); //get the enemy's Rigidbody   
+        rb2D = GetComponent<Rigidbody2D>(); //get the enemy's Rigidbody   
+        timer = changeTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 position = rb2D.position; // get the current position of the enemy
 
+        timer -= Time.deltaTime;
+
+        if (timer < 0)
         {
-            position.y = position.y + Time.deltaTime * speed;
+
+            direction = -direction; // turns positive to negative and vicerversa
+            timer = changeTime; // resets the timer
+
         }
+        Vector2 position = rb2D.position; // get the current position of the enemy
+        
+        if (isVertical) // if the enemy walks vertically
+        {
+            position.y = position.y + Time.deltaTime * speed * direction;
+        }
+
         else 
         {
-            position.x = position.x + Time.deltaTime * speed; // sum the position x with the speed and the time
+            position.x = position.x + Time.deltaTime * speed * direction; // sum the position x with the speed and the time
         }
         
 
-        rb2D.MovePosition(position); // apply the previous sum position to the enemy's rigibody
+        rb2D.MovePosition(position); 
+        // apply the previous sum position to the enemy's rigibody
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        RubyController player = other.gameObject.GetComponent<RubyController>();
+
+        if (player != null)
+        {
+
+            player.ChangeHealth(-1); //damages the player
+
+        }
     }
 }
