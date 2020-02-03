@@ -16,12 +16,37 @@ public class EnemyController : MonoBehaviour
     // animator values
     Animator anim;
 
+    //waypoint values
+    public Vector2[] localNodes;
+    //private vectrot2[] worldNodes;
+    int currentNode;
+    int nextNode;
+    Vector2 Velocity;
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>(); //get the enemy's Rigidbody   
         timer = changeTime; // set the timer
         anim = GetComponent<Animator>(); // get the enemy's Animator
+
+        // waypoint stuff
+        localNodes = new Vector2[transform.childCount];
+
+
+        for (int i = 0; i<= transform.childCount - 1; ++i) ;
+        {
+
+            Transform child = transform.GetChild(i).transform;
+            localNodes[i] = new Vector2(child.transform.position.x, child.transform.position.y);
+            Debug.Log("index"+ i + "Transform" + localNodes[i]) ;
+
+        }
+
+
+
+        currentNode = 0;
+        nextNode = 1;
     }
 
     // Update is called once per frame
@@ -38,7 +63,26 @@ public class EnemyController : MonoBehaviour
 
         }
         Vector2 position = rb2D.position; // get the current position of the enemy
-        
+
+        Vector2 wayPointDirection = localNodes[nextNode] - rb2D.position;
+        float dist = speed * Time.deltaTime;
+
+        if (wayPointDirection.sqrMagnitude <dist * dist)
+        {
+            dist = wayPointDirection.magnitude;
+            currentNode = nextNode;
+            nextNode += 1;
+            if (nextNode >= localNodes.Length)
+            {
+                nextNode = 0;
+            }
+
+
+
+        }
+
+
+
         if (isVertical) // if the enemy walks vertically
         {
             position.y = position.y + Time.deltaTime * speed * direction;
