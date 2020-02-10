@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
         localNodes = new Vector2[transform.childCount];
 
 
-        for (int i = 0; i<= transform.childCount - 1; ++i) ;
+        for (int i = 0; i<= transform.childCount - 1; ++i) 
         {
 
             Transform child = transform.GetChild(i).transform;
@@ -65,9 +65,14 @@ public class EnemyController : MonoBehaviour
         Vector2 position = rb2D.position; // get the current position of the enemy
 
         Vector2 wayPointDirection = localNodes[nextNode] - rb2D.position;
+        UpdateAnimations(wayPointDirection);
+
         float dist = speed * Time.deltaTime;
 
-        if (wayPointDirection.sqrMagnitude <dist * dist)
+        if (Input.GetKeyDown(KeyCode.Space))
+        
+
+        if (wayPointDirection.sqrMagnitude < dist * dist)
         {
             dist = wayPointDirection.magnitude;
             currentNode = nextNode;
@@ -82,8 +87,14 @@ public class EnemyController : MonoBehaviour
         }
 
 
+        Velocity = wayPointDirection.normalized * dist;
 
-        if (isVertical) // if the enemy walks vertically
+        rb2D.MovePosition(rb2D.position + Velocity);
+
+        
+       
+
+        /*if (isVertical) // if the enemy walks vertically
         {
             position.y = position.y + Time.deltaTime * speed * direction;
 
@@ -104,10 +115,15 @@ public class EnemyController : MonoBehaviour
         }
         
 
-        rb2D.MovePosition(position); 
+        rb2D.MovePosition(position); */
         // apply the previous sum position to the enemy's rigibody
     }
 
+    void UpdateAnimations(Vector2 direction)
+    {
+        anim.SetFloat("Move X", direction.x);
+        anim.SetFloat("Move Y", direction.y);
+    }
     private void OnCollisionEnter2D(Collision2D other)
     {
         RubyController player = other.gameObject.GetComponent<RubyController>();
