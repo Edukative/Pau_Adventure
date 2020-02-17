@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     Animator anim;
 
     //waypoint values
+    public GameObject wayPoints;
     public Vector2[] localNodes;
     //private vectrot2[] worldNodes;
     int currentNode;
@@ -31,13 +32,13 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>(); // get the enemy's Animator
 
         // waypoint stuff
-        localNodes = new Vector2[transform.childCount];
+        localNodes = new Vector2[wayPoints.transform.childCount];
 
 
-        for (int i = 0; i<= transform.childCount - 1; ++i) 
+        for (int i = 0; i<= wayPoints.transform.childCount - 1; ++i) 
         {
 
-            Transform child = transform.GetChild(i).transform;
+            Transform child = wayPoints.transform.GetChild(i).transform;
             localNodes[i] = new Vector2(child.transform.position.x, child.transform.position.y);
             Debug.Log("index"+ i + "Transform" + localNodes[i]) ;
 
@@ -70,6 +71,9 @@ public class EnemyController : MonoBehaviour
         float dist = speed * Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
         
 
         if (wayPointDirection.sqrMagnitude < dist * dist)
@@ -77,6 +81,7 @@ public class EnemyController : MonoBehaviour
             dist = wayPointDirection.magnitude;
             currentNode = nextNode;
             nextNode += 1;
+            Debug.Log(nextNode);
             if (nextNode >= localNodes.Length)
             {
                 nextNode = 0;
