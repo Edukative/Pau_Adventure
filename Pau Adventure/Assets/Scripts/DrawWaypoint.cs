@@ -27,7 +27,7 @@ public class DrawWaypoint : MonoBehaviour
         if (waypointIndex >= wayPointsParent.transform.childCount - 1)
         {
             target = wayPointsParent.GetChild(0);
-        }s        else
+        }        else
         {
             target = wayPointsParent.GetChild(waypointIndex + 1);
 

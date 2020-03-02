@@ -20,6 +20,12 @@ public class EnemyController : MonoBehaviour
     public GameObject wayPoints;
     public Vector2[] localNodes;
     //private vectrot2[] worldNodes;
+
+    bool broken = true;
+
+
+
+
     int currentNode;
     int nextNode;
     Vector2 Velocity;

@@ -23,6 +23,11 @@ public class RubyController : MonoBehaviour
     Animator anim;
     Vector2 lookDirection = new Vector2(1, 0); // the direction is facing the player in the scene
 
+    // projectile values
+    public GameObject projectilePrefab;
+    public float projectileForce = 300;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +77,11 @@ public class RubyController : MonoBehaviour
 
         }
        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
+
     }
 
 
@@ -96,6 +106,17 @@ public class RubyController : MonoBehaviour
 
     }
  
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, rubyRB2D.position + Vector2.up * 0.5f, Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+
+        projectile.Launch(lookDirection, projectileForce);
+
+        anim.SetTrigger("Launch");
+    }
+
 
 
 }
