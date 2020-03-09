@@ -77,7 +77,7 @@ public class RubyController : MonoBehaviour
 
         }
        
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Launch();
         }

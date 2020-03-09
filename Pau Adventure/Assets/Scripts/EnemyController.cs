@@ -146,4 +146,13 @@ public class EnemyController : MonoBehaviour
 
         }
     }
+
+    public void FixedUpdate()
+    {
+        broken = false;
+        rb2D.simulated = false;
+        anim.SetBool("Fixed", true);
+    }
+
+
 }
